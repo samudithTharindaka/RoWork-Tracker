@@ -16,8 +16,8 @@
         android:layout_height="293dp"
         android:background="@color/blue"
 
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -37,34 +37,37 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="@string/greetings"
-            android:textSize="19dp" />
+            android:textSize="19sp" />
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:contentDescription="@string/imageDes"
             app:srcCompat="@drawable/group_23" />
     </LinearLayout>
 
     <fragment
-        android:name="com.example.roworktracker.fragments.FragmentMenu"
-        android:layout_width="387dp"
-        android:layout_height="107dp"
-        android:layout_marginBottom="16dp"
+        android:name="com.example.roworktracker.fragmentsMain.FragmentMenu"
+        android:layout_width="360dp"
+        android:layout_height="150dp"
+        android:elevation="8dp"
+        android:layout_marginBottom="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/view3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view3" />
+        tools:layout="@layout/fragment_menu" />
 
     <View
         android:id="@+id/view3"
-        android:layout_width="402dp"
-        android:layout_height="579dp"
-        android:layout_marginTop="108dp"
+        android:layout_width="371dp"
+        android:layout_height="529dp"
+        android:layout_marginTop="112dp"
         android:background="@drawable/rounded_corners"
-        android:elevation="8dp"
+
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

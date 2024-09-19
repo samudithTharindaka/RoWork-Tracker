@@ -4,36 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.FragmentMenu">
+    tools:context=".fragmentsMain.FragmentMenu">
 
     <!-- TODO: Update blank fragment layout -->
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="153dp"
+        android:layout_width="wrap_content"
+        android:layout_height="120dp"
         android:background="@drawable/rounded_corners"
-        android:elevation="8dp"
-        android:orientation="horizontal"
         android:paddingStart="8dp"
         android:paddingTop="18dp"
         android:paddingEnd="8dp"
-        android:paddingBottom="18dp">
+        android:paddingBottom="18dp"
+
+        android:orientation="horizontal"
+
+        tools:ignore="UselessParent">
 
 
         <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="179dp"
-            android:scaleType="fitCenter"
+            android:id="@+id/imageButton3"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTintMode="screen"
             android:contentDescription="@string/imageDes"
+            android:scaleType="fitCenter"
+            android:src="@drawable/customization_1"
             tools:src="@drawable/customization_1" />
 
         <ImageButton
             android:id="@+id/imageButton"
-            android:scaleType="fitCenter"
-            android:layout_width="174dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:adjustViewBounds="false"
@@ -41,16 +43,18 @@
             android:contentDescription="@string/imageDes"
             android:cropToPadding="false"
             android:fitsSystemWindows="false"
+            android:scaleType="fitCenter"
             android:src="@drawable/_d_house_1" />
 
         <ImageButton
-            android:id="@+id/imageButton3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/imageButton2"
+            android:layout_width="147dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:scaleType="fitCenter"
             android:backgroundTintMode="screen"
             android:contentDescription="@string/imageDes"
+            android:scaleType="fitCenter"
+            android:src="@drawable/brief_1"
             tools:src="@drawable/brief_1" />
     </LinearLayout>
 
