@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.FragmentMenu">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="153dp"
+        android:background="@drawable/rounded_corners"
+        android:elevation="8dp"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingTop="18dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="18dp">
+
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="179dp"
+            android:scaleType="fitCenter"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTintMode="screen"
+            android:contentDescription="@string/imageDes"
+            tools:src="@drawable/customization_1" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:scaleType="fitCenter"
+            android:layout_width="174dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="false"
+            android:backgroundTintMode="screen"
+            android:contentDescription="@string/imageDes"
+            android:cropToPadding="false"
+            android:fitsSystemWindows="false"
+            android:src="@drawable/_d_house_1" />
+
+        <ImageButton
+            android:id="@+id/imageButton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:backgroundTintMode="screen"
+            android:contentDescription="@string/imageDes"
+            tools:src="@drawable/brief_1" />
+    </LinearLayout>
+
+
+</FrameLayout>
