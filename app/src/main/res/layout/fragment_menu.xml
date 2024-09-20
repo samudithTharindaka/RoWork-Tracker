@@ -23,7 +23,7 @@
 
 
         <ImageButton
-            android:id="@+id/imageButton3"
+            android:id="@+id/imageButton3Menu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -34,7 +34,7 @@
             tools:src="@drawable/customization_1" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/imageButtonMenu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -43,11 +43,12 @@
             android:contentDescription="@string/imageDes"
             android:cropToPadding="false"
             android:fitsSystemWindows="false"
+
             android:scaleType="fitCenter"
             android:src="@drawable/_d_house_1" />
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/imageButton2Menu"
             android:layout_width="147dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
