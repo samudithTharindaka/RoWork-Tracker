@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/blue"
     android:backgroundTint="@color/gray"
+
     tools:context=".MainActivity">
 
 
@@ -16,6 +17,7 @@
         android:layout_height="293dp"
         android:background="@color/blue"
 
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,8 +27,8 @@
         android:layout_height="83dp"
         android:layout_marginTop="16dp"
         android:orientation="horizontal"
-        android:paddingStart="29dp"
-        android:paddingEnd="29dp"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,11 +51,10 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="375dp"
-        android:layout_height="115dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="28dp"
+        android:layout_width="353dp"
+        android:layout_height="117dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
 
         android:background="@drawable/rounded_corners"
 
@@ -70,7 +71,7 @@
 
         <ImageButton
             android:id="@+id/imageButton3Menu"
-            android:layout_width="159dp"
+            android:layout_width="wrap_content"
             android:layout_height="82dp"
             android:layout_weight="1"
             android:backgroundTintMode="screen"
@@ -104,222 +105,224 @@
             android:src="@drawable/brief_1"
             tools:src="@drawable/brief_1" />
     </LinearLayout>
-    <LinearLayout
-        android:id="@+id/view3"
-        android:layout_width="373dp"
-        android:layout_height="544dp"
-        android:layout_marginTop="112dp"
-        android:background="@drawable/rounded_corners"
 
-        android:orientation="vertical"
-        android:paddingBottom="10dp"
+    <ScrollView
+        android:layout_width="344dp"
+        android:layout_height="486dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-
-        >
-
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <LinearLayout
-            android:layout_width="355dp"
-            android:layout_height="158dp"
-            android:orientation="horizontal">
-
-            <RelativeLayout
-
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@drawable/rounded_corners"
-
-                >
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@color/gray"
-                        android:paddingStart="5dp"
-                        android:paddingTop="5dp"
-                        android:paddingEnd="5dp"
-                        android:paddingBottom="5dp"
-
-                        >
-
-                        <ImageButton
-                            android:layout_width="90dp"
-                            android:layout_height="96dp"
-                            android:background="@drawable/rounded_corners"
-                            android:backgroundTint="@color/gray"
-                            android:contentDescription="@string/imageDes"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/homework_1"
-
-                            />
-                    </RelativeLayout>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/ToDos"
-                        android:textAlignment="center" />
-
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@drawable/rounded_corners"
-
-                >
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@color/gray"
-                        android:paddingStart="5dp"
-                        android:paddingTop="5dp"
-                        android:paddingEnd="5dp"
-                        android:paddingBottom="5dp"
-
-                        >
-
-                        <ImageButton
-                            android:layout_width="96dp"
-                            android:layout_height="97dp"
-                            android:background="@drawable/rounded_corners"
-                            android:backgroundTint="@color/gray"
-                            android:contentDescription="@string/imageDes"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/presentation_1"
-
-                            />
-                    </RelativeLayout>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/onGoing"
-                        android:textAlignment="center" />
-
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@drawable/rounded_corners"
-
-                >
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@color/gray"
-                        android:paddingStart="5dp"
-                        android:paddingTop="5dp"
-                        android:paddingEnd="5dp"
-                        android:paddingBottom="5dp"
-
-                        >
-
-                        <ImageButton
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:background="@drawable/rounded_corners"
-                            android:backgroundTint="@color/gray"
-                            android:contentDescription="@string/imageDes"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/_d_report_1"
-
-                            />
-                    </RelativeLayout>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/finished"
-                        android:textAlignment="center" />
-
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
-
-        </LinearLayout>
-
-
-        <TextView
-            android:id="@+id/textView"
+            android:id="@+id/view3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="18sp"
-            android:paddingBottom="8dp"
-            android:text="@string/workTime" />
 
-        <LinearLayout
-            android:layout_width="355dp"
-            android:layout_height="139dp"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
             android:background="@drawable/rounded_corners"
-            android:backgroundTint="@color/gray"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:paddingBottom="10dp">
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="wrap_content"
-                android:layout_height="122dp"
-                android:layout_weight="1"
-                android:contentDescription="@string/imageDes"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/_d_stopwatch_1"
-                tools:srcCompat="@drawable/_d_stopwatch_1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="158dp"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rounded_corners"
+
+                    >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/gray"
+                            android:paddingStart="5dp"
+                            android:paddingTop="5dp"
+                            android:paddingEnd="5dp"
+                            android:paddingBottom="5dp"
+
+                            >
+
+                            <ImageButton
+                                android:layout_width="85dp"
+                                android:layout_height="98dp"
+                                android:background="@drawable/rounded_corners"
+                                android:backgroundTint="@color/gray"
+                                android:contentDescription="@string/imageDes"
+                                android:scaleType="centerInside"
+                                android:src="@drawable/homework_1"
+
+                                />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/ToDos"
+                            android:textAlignment="center" />
+
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rounded_corners"
+
+                    >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/gray"
+                            android:paddingStart="5dp"
+                            android:paddingTop="5dp"
+                            android:paddingEnd="5dp"
+                            android:paddingBottom="5dp"
+
+                            >
+
+                            <ImageButton
+                                android:layout_width="91dp"
+                                android:layout_height="95dp"
+                                android:background="@drawable/rounded_corners"
+                                android:backgroundTint="@color/gray"
+                                android:contentDescription="@string/imageDes"
+                                android:scaleType="centerInside"
+                                android:src="@drawable/presentation_1"
+
+                                />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/onGoing"
+                            android:textAlignment="center" />
+
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rounded_corners"
+
+                    >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/gray"
+                            android:paddingStart="5dp"
+                            android:paddingTop="5dp"
+                            android:paddingEnd="5dp"
+                            android:paddingBottom="5dp"
+
+                            >
+
+                            <ImageButton
+                                android:layout_width="84dp"
+                                android:layout_height="96dp"
+                                android:background="@drawable/rounded_corners"
+                                android:backgroundTint="@color/gray"
+                                android:contentDescription="@string/imageDes"
+                                android:scaleType="centerInside"
+                                android:src="@drawable/_d_report_1"
+
+                                />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/finished"
+                            android:textAlignment="center" />
+
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
 
             <TextView
-                android:id="@+id/TextTime1"
-                android:layout_width="wrap_content"
-                android:layout_height="124dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="@string/timePlaceholder"
-                android:gravity="center"
-                android:textSize="55sp"
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="18sp"
+                android:paddingBottom="8dp"
+                android:text="@string/workTime" />
 
-                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="139dp"
+                android:background="@drawable/rounded_corners"
+                android:backgroundTint="@color/gray"
+                android:orientation="horizontal"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="122dp"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/imageDes"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/_d_stopwatch_1"
+                    tools:srcCompat="@drawable/_d_stopwatch_1" />
+
+                <TextView
+                    android:id="@+id/TextTime1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="124dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:hint="@string/timePlaceholder"
+                    android:textSize="55sp"
+
+                    />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="match_parent"
+                android:layout_height="192dp"
+                android:contentDescription="@string/imageDes"
+                android:rotationX="0"
+                app:srcCompat="@drawable/group_2__1_"
+                tools:srcCompat="@drawable/group_2__1_" />
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="359dp"
-            android:layout_height="192dp"
-            android:contentDescription="@string/imageDes"
-            android:rotationX="0"
-            app:srcCompat="@drawable/group_2__1_"
-            tools:srcCompat="@drawable/group_2__1_" />
-    </LinearLayout>
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

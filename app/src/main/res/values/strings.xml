@@ -10,6 +10,7 @@
     <string name="workTime">Work Time Remaining</string>
 
 <!--    to do activity-->
+    <string name="addtask">Add a new Task</string>
 
 
 </resources>
