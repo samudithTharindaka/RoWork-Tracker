@@ -41,23 +41,15 @@ class ToDosManageActivity : AppCompatActivity() {
     }
 
     private fun addTask() {
-        val taskText = editTextTask.text.toString().trim()
-        if (taskText.isNotEmpty()) {
-            val newTask = TextView(this).apply {
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-                text = taskText
-                setPadding(16, 16, 16, 16)
-                setBackgroundResource(R.drawable.rounded_corners)
-                textSize = 18f
-                setTextColor(ContextCompat.getColor(this@ToDosManageActivity, R.color.black))
-            }
+        val taskName = editTextTask.text.toString().trim()
+        val taskStatus = "Pending" // Default status when a task is added
+        val timeRemaining = 60000L // Default time remaining, e.g., 1 minute in milliseconds
 
-            linearLayout3.addView(newTask)
-            saveTaskToPreferences(taskText)
-            editTextTask.setText("")
+        if (taskName.isNotEmpty()) {
+            val taskData = Task(taskName, taskStatus, timeRemaining)
+            saveTaskToPreferences(taskData)
+            loadTasksFromPreferences() // Reload to reflect new task in the UI
+            editTextTask.setText("") // Clear the input field
         } else {
             Toast.makeText(this, "Please enter a task", Toast.LENGTH_SHORT).show()
         }
@@ -65,50 +57,127 @@ class ToDosManageActivity : AppCompatActivity() {
 
     private fun handleMenu() {
         val homeBtn: ImageButton = findViewById(R.id.imageButtonMenu)
+        val toDoBtn: ImageButton = findViewById(R.id.imageButton2Menu)
         val settingsBtn: ImageButton = findViewById(R.id.imageButton3Menu)
-        val todoBtn: ImageButton = findViewById(R.id.imageButton2Menu)
 
-        settingsBtn.setOnClickListener {
-            Log.d("MainActivity", "Settings button clicked")
+        homeBtn.setOnClickListener {
+
             try {
                 val intent = Intent(this@ToDosManageActivity, MainActivity::class.java)
                 startActivity(intent)
-                Log.d("MainActivity", "Intent started successfully")
+
             } catch (e: Exception) {
-                Log.e("MainActivity", "Error starting Intent: ${e.message}")
+                Log.e("todo", "Error starting Intent: ${e.message}")
             }
-            Toast.makeText(this, "Settings clicked", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "home clicked ", Toast.LENGTH_SHORT).show()
+        }
+
+        toDoBtn.setOnClickListener {
+            Log.d("todo", "Settings button clicked")
+
+            Toast.makeText(this, "You are in the Todo page ", Toast.LENGTH_SHORT).show()
+        }
+
+        settingsBtn.setOnClickListener {
+            Log.d("todo", "Settings button clicked")
+            Toast.makeText(this, "Settings clicked ", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun saveTaskToPreferences(task: String) {
+    private fun saveTaskToPreferences(task: Task) {
         val sharedPreferences = getSharedPreferences("tasks", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
 
-        // Append the new task to existing tasks
-        val existingTasks = sharedPreferences.getStringSet("taskSet", mutableSetOf()) ?: mutableSetOf()
-        existingTasks.add(task)
-        editor.putStringSet("taskSet", existingTasks)
+        // Retrieve existing tasks
+        val existingTasks = sharedPreferences.getString("taskList", "") ?: ""
+
+        // Append the new task
+        val updatedTasks = if (existingTasks.isNotEmpty()) {
+            "$existingTasks|${task.name};${task.status};${task.timeRemaining}"
+        } else {
+            "${task.name};${task.status};${task.timeRemaining}"
+        }
+
+        // Save the updated tasks back to SharedPreferences
+        editor.putString("taskList", updatedTasks)
         editor.apply()
     }
 
     private fun loadTasksFromPreferences() {
         val sharedPreferences = getSharedPreferences("tasks", Context.MODE_PRIVATE)
-        val taskSet = sharedPreferences.getStringSet("taskSet", mutableSetOf()) ?: mutableSetOf()
+        val taskList = sharedPreferences.getString("taskList", "") ?: return
 
-        taskSet.forEach { task ->
-            val newTask = TextView(this).apply {
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-                text = task
-                setPadding(16, 16, 16, 16)
-                setBackgroundResource(R.drawable.rounded_corners)
-                textSize = 18f
-                setTextColor(ContextCompat.getColor(this@ToDosManageActivity, R.color.black))
+        linearLayout3.removeAllViews() // Clear existing views to avoid duplicates
+        Log.d("ToDosManageActivity", "Loaded tasks: $taskList")
+
+        taskList.split("|").forEach { taskData ->
+            val data = taskData.split(";")
+            if (data.size == 3) {
+                val taskName = data[0].trim()
+                val taskStatus = data[1].trim()
+                val timeRemaining = data[2].trim().toLong()
+
+                // Inflate the task item layout
+                val taskView = layoutInflater.inflate(R.layout.task_item, linearLayout3, false)
+
+                // Get references to the UI elements
+                val taskTextView: TextView = taskView.findViewById(R.id.textViewTask)
+                val deleteButton: ImageButton = taskView.findViewById(R.id.buttonDeleteTask)
+                val startButton: ImageButton = taskView.findViewById(R.id.buttonStartTask)
+
+                // Set task information
+                taskTextView.text = "$taskName ($taskStatus, ${timeRemaining} ms remaining)"
+
+                // Set up button click listeners
+                deleteButton.setOnClickListener {
+                    // Handle delete task
+                    deleteTask(taskData)
+                }
+
+                startButton.setOnClickListener {
+                    // Handle start task
+                    startTask(taskName, taskStatus, timeRemaining)
+                }
+
+                // Add the inflated view to the main LinearLayout
+                linearLayout3.addView(taskView)
             }
-            linearLayout3.addView(newTask)
         }
     }
+
+    private fun deleteTask(taskData: String) {
+        val sharedPreferences = getSharedPreferences("tasks", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
+        // Retrieve existing tasks
+        val existingTasks = sharedPreferences.getString("taskList", "") ?: ""
+
+        // Remove the task (using "|" as the delimiter)
+        val updatedTasks = existingTasks.split("|")
+            .filter { it.trim() != taskData.trim() }
+            .joinToString("|")
+
+        // Save the updated tasks back to SharedPreferences
+        editor.putString("taskList", updatedTasks)
+        editor.apply()
+
+        // Reload the tasks to reflect the changes in the UI
+        loadTasksFromPreferences()
+    }
+
+    private fun startTask(taskName: String, taskStatus: String, timeRemaining: Long) {
+        // Handle the start task logic, e.g., navigate to another activity
+        val intent = Intent(this, ManageTaskActivity::class.java).apply {
+            putExtra("taskName", taskName)
+            putExtra("taskStatus", taskStatus)
+           putExtra("timeRemaining", timeRemaining)
+        }
+        startActivity(intent)
+    }
+
+//    data class Task(
+//        val name: String,
+//        val status: String,
+//        val timeRemaining: Long
+//    )
 }

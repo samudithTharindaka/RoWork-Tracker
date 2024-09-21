@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:backgroundTint="@color/gray"
+    tools:context=".ManageTaskActivity">
+
+    <!-- Header LinearLayout -->
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="321dp"
+        android:layout_height="76dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="2dp"
+        android:background="@drawable/rounded_corners"
+        android:elevation="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/imageButton4"
+            android:layout_width="3dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTintMode="screen"
+            android:contentDescription="@string/ToDos"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/image_6" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/header"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="339dp"
+        android:layout_height="494dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+
+
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corners"
+                android:elevation="8dp"
+
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="359dp"
+                        android:layout_height="49dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp">
+
+                        <TextView
+                            android:id="@+id/nameOfTask"
+                            android:layout_width="232dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/imageDes"
+                            android:textSize="21sp"
+                            android:textStyle="bold" />
+
+                        <ImageButton
+                            android:id="@+id/deleteBtn1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="94dp"
+                            android:backgroundTintMode="screen"
+                            android:contentDescription="@string/imageDes"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/image_removebg_preview__23__1" />
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/statusOfTask"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="12dp"
+                        android:text="@string/imageDes"
+                        android:textSize="14sp" />
+
+
+                    <RelativeLayout
+                        android:layout_width="341dp"
+                        android:layout_height="250dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@drawable/rounded_corners"
+                        android:backgroundTint="@color/gray">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="72dp"
+                                android:layout_height="91dp"
+                                android:contentDescription="@string/imageDes"
+                                android:scaleType="fitCenter"
+                                app:srcCompat="@drawable/_d_alarm_1" />
+
+                            <TextView
+                                android:id="@+id/textViewTimeRemaining"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/timePlaceholder"
+                                android:textSize="50sp" />
+
+                            <LinearLayout
+                                android:layout_width="262dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <Button
+                                    android:id="@+id/buttonStartPause"
+                                    android:layout_width="126dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="8dp"
+                                    android:backgroundTint="@color/blue"
+                                    android:text="Start Time"
+
+                                    />
+
+                                <Button
+                                    android:id="@+id/buttonReset"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:backgroundTint="@color/red"
+                                    android:text="Reset Time"
+
+                                    />
+
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="172dp"
+                android:layout_marginTop="28dp"
+                android:background="@drawable/rounded_corners"
+                android:elevation="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="25dp"
+
+                    android:paddingEnd="25dp">
+
+                    <TextView
+                        android:layout_width="149dp"
+                        android:layout_height="match_parent"
+                        android:paddingTop="25dp"
+                        android:text="@string/imageText" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="150dp"
+
+                        android:contentDescription="@string/imageDes"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/untitled3_1" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom Navigation LinearLayout -->
+    <LinearLayout
+        android:layout_width="350dp"
+        android:layout_height="104dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+
+        android:background="@drawable/rounded_corners"
+
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingTop="18dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="UselessParent">
+
+
+        <ImageButton
+            android:id="@+id/imageButton3Menu"
+            android:layout_width="wrap_content"
+            android:layout_height="73dp"
+            android:layout_weight="1"
+            android:backgroundTintMode="screen"
+            android:contentDescription="@string/imageDes"
+            android:scaleType="fitCenter"
+            android:src="@drawable/customization_1"
+            tools:src="@drawable/customization_1" />
+
+        <ImageButton
+            android:id="@+id/imageButtonMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="73dp"
+            android:layout_weight="1"
+            android:adjustViewBounds="false"
+            android:backgroundTintMode="screen"
+            android:contentDescription="@string/imageDes"
+            android:cropToPadding="false"
+            android:fitsSystemWindows="false"
+
+            android:scaleType="fitCenter"
+            android:src="@drawable/_d_house_1" />
+
+        <ImageButton
+            android:id="@+id/imageButton2Menu"
+            android:layout_width="147dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:backgroundTintMode="screen"
+            android:contentDescription="@string/imageDes"
+            android:scaleType="fitCenter"
+            android:src="@drawable/brief_1"
+            tools:src="@drawable/brief_1" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

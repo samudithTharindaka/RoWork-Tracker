@@ -13,10 +13,10 @@
     <!-- Header LinearLayout -->
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="371dp"
-        android:layout_height="89dp"
+        android:layout_width="324dp"
+        android:layout_height="67dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="2dp"
         android:background="@drawable/rounded_corners"
         android:elevation="8dp"

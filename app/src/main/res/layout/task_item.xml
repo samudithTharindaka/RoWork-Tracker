@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_corners"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/textViewTask"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:hint="@string/timePlaceholder"
+        android:padding="8dp" />
+
+    <ImageButton
+        android:id="@+id/buttonDeleteTask"
+        android:layout_width="49dp"
+        android:layout_height="51dp"
+        android:contentDescription="@string/imageDes"
+        android:scaleType="fitCenter"
+        android:backgroundTint="@color/gray"
+        android:background="@drawable/rounded_corners"
+        android:src="@drawable/image_removebg_preview__23__1" />
+
+    <ImageButton
+        android:id="@+id/buttonStartTask"
+        android:layout_width="49dp"
+        android:layout_height="51dp"
+        android:contentDescription="@string/imageDes"
+        android:backgroundTint="@color/gray"
+        android:background="@drawable/rounded_corners"
+        android:scaleType="fitCenter"
+        android:src="@drawable/checked" />
+
+</LinearLayout>
