@@ -8,11 +8,12 @@
     <string name="timePlaceholder">00:00:00</string>
     <string name="finished">Finished</string>
     <string name="workTime">Work Time Remaining</string>
+    <string name="alarmBtn">Alarm</string>
 
     <!--    to do activity-->
     <string name="addtask">Add a new Task</string>
 
-<!--    manageActivity-->
+    <!--    manageActivity-->
     <string name="header">To Dos > Start</string>
     <string name="imageText">set the time and follow up your works</string>
 </resources>

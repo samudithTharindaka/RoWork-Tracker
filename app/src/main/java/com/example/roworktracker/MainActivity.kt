@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "You are already in home", Toast.LENGTH_SHORT).show()
             }
 
-            settingsBtn.setOnClickListener() {
+            todoBtn.setOnClickListener() {
 
                 Log.d("MainActivity", "Settings button clicked")
                 // Check if Intent works
@@ -48,8 +48,8 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Settings clicked", Toast.LENGTH_SHORT).show()
             }
 
-            todoBtn.setOnClickListener() {
-                Toast.makeText(this, "todo clicked", Toast.LENGTH_SHORT).show()
+            settingsBtn.setOnClickListener() {
+                Toast.makeText(this, "No Settings available", Toast.LENGTH_SHORT).show()
             }
 
         }catch (e: Exception) {
