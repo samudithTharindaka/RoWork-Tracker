@@ -3,6 +3,8 @@ package com.example.roworktracker
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.EditText
 import android.widget.ImageButton
@@ -18,6 +20,8 @@ class ToDosManageActivity : AppCompatActivity() {
     private lateinit var editTextTask: EditText
     private lateinit var linearLayout3: LinearLayout
     private lateinit var buttonAddTask: ImageButton
+    private lateinit var handler: Handler
+    private lateinit var refreshRunnable: Runnable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,15 +42,32 @@ class ToDosManageActivity : AppCompatActivity() {
 
         // Call handleMenu function
         handleMenu()
+
+
+        // Initialize the Handler and Runnable for refreshing the UI
+        handler = Handler(Looper.getMainLooper())
+        refreshRunnable = object : Runnable {
+            override fun run() {
+                // Refresh the tasks or update the UI every second
+                loadTasksFromPreferences()
+
+                // Schedule the next update after 1 second (1000 milliseconds)
+                handler.postDelayed(this, 1000)
+            }
+        }
+
+        // Start the repeated refresh every second
+        handler.post(refreshRunnable)
     }
 
     private fun addTask() {
         val taskName = editTextTask.text.toString().trim()
         val taskStatus = "Pending" // Default status when a task is added
         val timeRemaining = 60000L // Default time remaining, e.g., 1 minute in milliseconds
+       val piority = false
 
         if (taskName.isNotEmpty()) {
-            val taskData = Task(taskName, taskStatus, timeRemaining)
+            val taskData = Task(taskName, taskStatus, timeRemaining,piority)
             saveTaskToPreferences(taskData)
             loadTasksFromPreferences() // Reload to reflect new task in the UI
             editTextTask.setText("") // Clear the input field
@@ -126,7 +147,7 @@ class ToDosManageActivity : AppCompatActivity() {
                 val startButton: ImageButton = taskView.findViewById(R.id.buttonStartTask)
 
                 // Set task information
-                taskTextView.text = "$taskName ($taskStatus, ${timeRemaining} ms remaining)"
+                taskTextView.text = "$taskName ($taskStatus)"
 
                 // Set up button click listeners
                 deleteButton.setOnClickListener {
@@ -173,6 +194,11 @@ class ToDosManageActivity : AppCompatActivity() {
            putExtra("timeRemaining", timeRemaining)
         }
         startActivity(intent)
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        // Remove callbacks to stop the refreshing when the activity is destroyed
+        handler.removeCallbacks(refreshRunnable)
     }
 
 //    data class Task(

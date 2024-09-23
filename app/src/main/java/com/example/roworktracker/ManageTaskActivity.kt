@@ -1,23 +1,19 @@
 package com.example.roworktracker
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.os.Build
+import android.content.IntentFilter
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 
 class ManageTaskActivity : AppCompatActivity() {
 
@@ -27,16 +23,12 @@ class ManageTaskActivity : AppCompatActivity() {
     private lateinit var timerTextView: TextView
     private lateinit var startPauseButton: Button
     private lateinit var resetButton: Button
-    private  lateinit var deleteButton:ImageButton
-
-    // Constants
-    private val CHANNEL_ID = "task_notification_channel"
+    private lateinit var deleteButton: ImageButton
 
     // Task data
     private var taskName: String = ""
     private var taskStatus: String = ""
-    private var timeRemaining: Long = 0L
-    private var timer: CountDownTimer? = null
+    private var timeRemaining: Long = 60000L
     private var isTimerRunning = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,26 +54,60 @@ class ManageTaskActivity : AppCompatActivity() {
         taskStatusTextView.text = taskStatus
         updateTimerText(timeRemaining)
 
+        // Register a broadcast receiver to update UI when the timer changes
+        LocalBroadcastManager.getInstance(this).registerReceiver(timerUpdateReceiver, IntentFilter("TIMER_UPDATED"))
+
         // Handle start/pause button click
         startPauseButton.setOnClickListener {
             if (isTimerRunning) {
-                pauseTimer()
+                pauseTimerService()
             } else {
-                startTimer()
+                startTimerService(timeRemaining)
             }
         }
 
         // Handle reset button click
         resetButton.setOnClickListener {
-            resetTimer()
+            resetTimerService()
         }
 
-        deleteButton.setOnClickListener(){
-            handleTaskDeletion()
+        deleteButton.setOnClickListener {
+            if (taskStatus == "Ongoing") {
+                // Vibrate and show notice if the task is ongoing
+                vibrateAndShowNotice()
+            } else {
+                handleTaskDeletion()
+            }
         }
 
         // Handle menu navigation buttons
         handleMenu()
+    }
+
+    private val timerUpdateReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent != null) {
+                timeRemaining = intent.getLongExtra("timeRemaining", 60000L)
+                isTimerRunning = intent.getBooleanExtra("isTimerRunning", false)
+                val timerFinished = intent.getBooleanExtra("timerFinished", false)
+
+                // Update status based on timer state
+                taskStatus = when {
+                    timerFinished -> "Completed"
+                    isTimerRunning -> "Ongoing"
+                    else -> "Paused"
+                }
+
+                // Update the UI elements
+                updateTimerText(timeRemaining)
+                taskStatusTextView.text = taskStatus
+                startPauseButton.text = if (isTimerRunning) "Pause Time" else "Start Time"
+                startPauseButton.setBackgroundColor(ContextCompat.getColor(this@ManageTaskActivity, if (isTimerRunning) R.color.red else R.color.blue))
+
+                // Save the updated status in SharedPreferences
+                updateTaskStateInPreferences()
+            }
+        }
     }
 
     private fun handleMenu() {
@@ -104,44 +130,39 @@ class ManageTaskActivity : AppCompatActivity() {
         }
     }
 
-    private fun startTimer() {
-        timer = object : CountDownTimer(timeRemaining, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                timeRemaining = millisUntilFinished
-                updateTimerText(timeRemaining)
-            }
+    private fun startTimerService(timeRemaining: Long) {
+        val intent = Intent(this, TimerService::class.java)
+        intent.action = "START_TIMER"
+        intent.putExtra("timeRemaining", timeRemaining)
+        ContextCompat.startForegroundService(this, intent)
 
-            override fun onFinish() {
-                isTimerRunning = false
-                taskStatus = "Completed"
-                taskStatusTextView.text = taskStatus
-                updateTaskStateInPreferences()
-                Toast.makeText(this@ManageTaskActivity, "Task completed!", Toast.LENGTH_SHORT).show()
-            }
-        }.start()
-        isTimerRunning = true
+        // Update status and save to SharedPreferences
         taskStatus = "Ongoing"
-        taskStatusTextView.text = taskStatus
-        startPauseButton.text = "Pause Time"
-        startPauseButton.setBackgroundColor(ContextCompat.getColor(this, R.color.red))
+        taskStatusTextView.text= "Ongoing"
         updateTaskStateInPreferences()
     }
 
-    private fun pauseTimer() {
-        timer?.cancel()
-        isTimerRunning = false
-        taskStatus = if (timeRemaining > 0) "Paused" else "Completed"
-        taskStatusTextView.text = taskStatus
-        startPauseButton.text = "Start Time"
+    private fun pauseTimerService() {
+        val intent = Intent(this, TimerService::class.java)
+        intent.action = "PAUSE_TIMER"
+        ContextCompat.startForegroundService(this, intent)
+
+        // Update status and save to SharedPreferences
+        taskStatus = "Paused"
+        isTimerRunning = false // Update the state here
+        startPauseButton.text = "Start Time" // Update the button text immediately after pausing
+        taskStatusTextView.text= "Paused"
         startPauseButton.setBackgroundColor(ContextCompat.getColor(this, R.color.blue))
         updateTaskStateInPreferences()
     }
 
-    private fun resetTimer() {
-        pauseTimer()
-        timeRemaining = 60000L // Reset to default 1 minute
+    private fun resetTimerService() {
+        val intent = Intent(this, TimerService::class.java)
+        intent.action = "RESET_TIMER"
+        ContextCompat.startForegroundService(this, intent)
+
+        // Update status and save to SharedPreferences
         taskStatus = "Pending"
-        updateTimerText(timeRemaining)
         updateTaskStateInPreferences()
     }
 
@@ -188,16 +209,6 @@ class ManageTaskActivity : AppCompatActivity() {
 
     private fun handleTaskDeletion() {
         if (taskStatus == "Ongoing") {
-            vibrateDevice()
-            createNotificationChannel()
-            val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.group_23) // Replace with your own icon
-                .setContentTitle("Cannot Delete Task")
-                .setContentText("Cannot delete an ongoing task.")
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .build()
-
-            NotificationManagerCompat.from(this).notify(1, notification)
             Toast.makeText(this, "Cannot delete ongoing task", Toast.LENGTH_SHORT).show()
         } else {
             deleteTaskFromPreferences()
@@ -217,26 +228,23 @@ class ManageTaskActivity : AppCompatActivity() {
         editor.apply()
     }
 
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "Task Notification"
-            val descriptionText = "Notifications for task management"
-            val importance = NotificationManager.IMPORTANCE_HIGH
-            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
-                description = descriptionText
+    private fun vibrateAndShowNotice() {
+        // Vibrate for 500 milliseconds
+        val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        if (vibrator.hasVibrator()) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
+            } else {
+                vibrator.vibrate(500)
             }
-            val notificationManager: NotificationManager =
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
         }
+
+        // Show a toast message
+        Toast.makeText(this, "Cannot delete an ongoing task!", Toast.LENGTH_SHORT).show()
     }
 
-    private fun vibrateDevice() {
-        val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
-        } else {
-            vibrator.vibrate(500)
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(timerUpdateReceiver)
     }
 }
