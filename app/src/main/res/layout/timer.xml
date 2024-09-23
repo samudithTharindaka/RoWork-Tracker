@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="139dp"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@color/gray"
+        android:orientation="horizontal"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="122dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/imageDes"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/_d_alarm_1" />
+
+        <TextView
+            android:id="@+id/TextTimewi"
+            android:layout_width="wrap_content"
+            android:layout_height="124dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="@string/timePlaceholder"
+            android:textSize="55sp"
+
+            />
+    </LinearLayout>
+</RelativeLayout>

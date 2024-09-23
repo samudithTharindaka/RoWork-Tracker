@@ -4,6 +4,7 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
+import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -79,6 +80,10 @@ class TimerService : Service() {
         intent.putExtra("isTimerRunning", isTimerRunning)
         intent.putExtra("timerFinished", finished)
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
+
+        // Notify the widget to update
+        val widgetUpdateIntent = Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
+        sendBroadcast(widgetUpdateIntent)
     }
 
     private fun updateNotification(content: String) {

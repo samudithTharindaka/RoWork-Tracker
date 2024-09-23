@@ -16,4 +16,7 @@
     <!--    manageActivity-->
     <string name="header">To Dos > Start</string>
     <string name="imageText">set the time and follow up your works</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">This is an app widget description</string>
 </resources>
