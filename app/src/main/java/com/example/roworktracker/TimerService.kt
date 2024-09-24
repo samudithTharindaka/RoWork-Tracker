@@ -19,6 +19,7 @@ class TimerService : Service() {
     private var isTimerRunning = false
     private var timer: CountDownTimer? = null
     private val CHANNEL_ID = "TimerServiceChannel"
+    private var hasSent30SecondNotification = false // Flag to track 30-second notification
 
     override fun onCreate() {
         super.onCreate()
@@ -30,6 +31,7 @@ class TimerService : Service() {
         when (action) {
             "START_TIMER" -> {
                 timeRemaining = intent.getLongExtra("timeRemaining", 60000L)
+                hasSent30SecondNotification = false // Reset flag when starting timer
                 startTimer()
             }
             "PAUSE_TIMER" -> pauseTimer()
@@ -48,6 +50,12 @@ class TimerService : Service() {
                 timeRemaining = millisUntilFinished
                 saveRemainingTimeToPreferences(timeRemaining) // Save remaining time
                 sendTimerUpdate()
+
+                // Check if remaining time is 30 seconds and notification has not been sent yet
+                if (timeRemaining <= 30000 && !hasSent30SecondNotification) {
+                    send30SecondNotification()
+                    hasSent30SecondNotification = true // Update flag
+                }
             }
 
             override fun onFinish() {
@@ -70,6 +78,7 @@ class TimerService : Service() {
     private fun resetTimer() {
         pauseTimer()
         timeRemaining = 60000L
+        hasSent30SecondNotification = false // Reset flag when timer is reset
         saveRemainingTimeToPreferences(timeRemaining) // Reset saved time
         sendTimerUpdate()
     }
@@ -113,5 +122,17 @@ class TimerService : Service() {
         val editor = sharedPreferences.edit()
         editor.putLong("remainingTime", time)
         editor.apply()
+    }
+
+    // Function to send 30-second remaining notification
+    private fun send30SecondNotification() {
+        val notification: Notification = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setContentTitle("Task Timer")
+            .setContentText("Only 30 seconds remaining!")
+            .setSmallIcon(R.drawable.group_23)
+            .setPriority(NotificationCompat.PRIORITY_HIGH) // Set high priority for important alerts
+            .build()
+        val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        manager.notify(2, notification) // Use a different notification ID to avoid conflict with startForeground
     }
 }

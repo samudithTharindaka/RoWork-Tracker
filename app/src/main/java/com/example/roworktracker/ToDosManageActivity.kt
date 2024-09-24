@@ -22,6 +22,7 @@ class ToDosManageActivity : AppCompatActivity() {
     private lateinit var buttonAddTask: ImageButton
     private lateinit var handler: Handler
     private lateinit var refreshRunnable: Runnable
+    private lateinit var backBtn:ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,12 +33,18 @@ class ToDosManageActivity : AppCompatActivity() {
         editTextTask = findViewById(R.id.editTextTask)
         linearLayout3 = findViewById(R.id.linearLayout3)
         buttonAddTask = findViewById(R.id.buttonAddTask)
+        backBtn= findViewById(R.id.imageButtonBack)
+
 
         // Load tasks from SharedPreferences
         loadTasksFromPreferences()
 
         buttonAddTask.setOnClickListener {
             addTask()
+        }
+        backBtn.setOnClickListener(){
+            val intent = Intent(this@ToDosManageActivity, MainActivity::class.java)
+            startActivity(intent)
         }
 
         // Call handleMenu function
@@ -160,9 +167,64 @@ class ToDosManageActivity : AppCompatActivity() {
                     startTask(taskName, taskStatus, timeRemaining)
                 }
 
+                taskTextView.setOnClickListener {
+                    // Handle edit task on text click
+                    showEditTaskDialog(taskData)
+                }
+
                 // Add the inflated view to the main LinearLayout
                 linearLayout3.addView(taskView)
             }
+        }
+    }
+
+    private fun showEditTaskDialog(taskData: String) {
+        val sharedPreferences = getSharedPreferences("tasks", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
+        // Parse the existing task data
+        val data = taskData.split(";")
+        if (data.size == 3) {
+            val currentTaskName = data[0].trim()
+            val currentTaskStatus = data[1].trim()
+            val currentTimeRemaining = data[2].trim().toLong()
+
+            // Create the dialog
+            val dialogView = layoutInflater.inflate(R.layout.dialog_edit_task, null)
+            val editTextTaskName: EditText = dialogView.findViewById(R.id.editTextTaskName)
+            val editTextTaskTime: EditText = dialogView.findViewById(R.id.editTextTaskTime)
+
+            // Set current values in the dialog
+            editTextTaskName.setText(currentTaskName)
+            editTextTaskTime.setText(currentTimeRemaining.toString())
+
+            val dialog = androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Edit Task")
+                .setView(dialogView)
+                .setPositiveButton("Save") { _, _ ->
+                    // Get new values from the dialog
+                    val newTaskName = editTextTaskName.text.toString().trim()
+                    val newTimeRemaining = editTextTaskTime.text.toString().trim().toLongOrNull() ?: currentTimeRemaining
+
+                    // Create the new task data string
+                    val newTaskData = "$newTaskName;$currentTaskStatus;$newTimeRemaining"
+
+                    // Replace the old task data with the new one
+                    val updatedTasks = sharedPreferences.getString("taskList", "")?.split("|")
+                        ?.map { if (it.trim() == taskData.trim()) newTaskData else it }
+                        ?.joinToString("|")
+
+                    // Save the updated tasks back to SharedPreferences
+                    editor.putString("taskList", updatedTasks)
+                    editor.apply()
+
+                    // Refresh the UI to reflect changes
+                    loadTasksFromPreferences()
+                }
+                .setNegativeButton("Cancel", null)
+                .create()
+
+            dialog.show()
         }
     }
 

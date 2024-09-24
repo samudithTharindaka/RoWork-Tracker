@@ -24,12 +24,14 @@ class ManageTaskActivity : AppCompatActivity() {
     private lateinit var startPauseButton: Button
     private lateinit var resetButton: Button
     private lateinit var deleteButton: ImageButton
+    private lateinit var backBtn:ImageButton
 
     // Task data
     private var taskName: String = ""
     private var taskStatus: String = ""
     private var timeRemaining: Long = 60000L
     private var isTimerRunning = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +44,7 @@ class ManageTaskActivity : AppCompatActivity() {
         startPauseButton = findViewById(R.id.buttonStartPause)
         resetButton = findViewById(R.id.buttonReset)
         deleteButton = findViewById(R.id.deleteBtn1)
+        backBtn = findViewById(R.id.imageButtonBack2)
 
         // Retrieve task data from intent
         taskName = intent.getStringExtra("taskName") ?: ""
@@ -78,6 +81,11 @@ class ManageTaskActivity : AppCompatActivity() {
             } else {
                 handleTaskDeletion()
             }
+        }
+
+
+        backBtn.setOnClickListener(){
+            startActivity(Intent(this, ToDosManageActivity::class.java))
         }
 
         // Handle menu navigation buttons
